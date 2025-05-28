@@ -108,44 +108,10 @@
   { "num": 107, "cnt": 15, "price": 3500 },
   { "num": 108, "cnt": 2, "price": 3500 },
   { "num": 109, "cnt": 2, "price": 3500 },
-  { "num": 110, "cnt": 1, "price": 3500 },
-  { "num": 111, "cnt": 3, "price": 3500 },
-  { "num": 112, "cnt": 10, "price": 3500 },
-  { "num": 113, "cnt": 2, "price": 3500 },
-  { "num": 114, "cnt": 2, "price": 3500 },
-  { "num": 115, "cnt": 4, "price": 3500 },
-  { "num": 116, "cnt": 39, "price": 3500 },
-  { "num": 117, "cnt": 20, "price": 3500 },
-  { "num": 118, "cnt": 5, "price": 3500 },
-  { "num": 119, "cnt": 2, "price": 3500 },
-  { "num": 120, "cnt": 7, "price": 3500 },
-  { "num": 121, "cnt": 38, "price": 3500 },
-  { "num": 122, "cnt": 10, "price": 3500 },
-  { "num": 123, "cnt": 1, "price": 3500 },
-  { "num": 124, "cnt": 4, "price": 3500 },
-  { "num": 125, "cnt": 43, "price": 3500 },
-  { "num": 126, "cnt": 4, "price": 3500 },
-  { "num": 127, "cnt": 41, "price": 3500 },
-  { "num": 128, "cnt": 2, "price": 3500 },
-  { "num": 129, "cnt": 6, "price": 3500 },
-  { "num": 130, "cnt": 6, "price": 3500 },
-  { "num": 131, "cnt": 5, "price": 3500 },
-  { "num": 132, "cnt": 6, "price": 3500 },
-  { "num": 133, "cnt": 6, "price": 3500 },
-  { "num": 134, "cnt": 5, "price": 3500 },
-  { "num": 135, "cnt": 2, "price": 3500 },
-  { "num": 136, "cnt": 3, "price": 3500 },
-  { "num": 137, "cnt": 8, "price": 3500 },
-  { "num": 138, "cnt": 5, "price": 3500 },
-  { "num": 139, "cnt": 10, "price": 3500 },
-  { "num": 140, "cnt": 2, "price": 3500 },
-  { "num": 141, "cnt": 2, "price": 3500 },
-  { "num": 142, "cnt": 8, "price": 3500 }
-]
-```json
-[
-  { "num": 1, "cnt": 4, "price": 500 },
-  { "num": 2, "cnt": 2, "price": 500 },
-  { "num": 3, "cnt": 5, "price": 1000 }
-  // 以下、同様に追加
-]
+  { "
+円 (PayPay), ---円 (他)`;
+    else summary.textContent = `選択件数: ${total} 合計: ${discSum}円 (PayPay), ${discSum+600}円 (他)`;
+  });
+}
+
+document.addEventListener('DOMContentLoaded', init);
