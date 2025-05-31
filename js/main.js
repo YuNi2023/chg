@@ -4,12 +4,13 @@ async function loadData() {
   return res.json();
 }
 
-// 全角→半角、カンマ変換
+// 全角→半角、カンマ・範囲指定文字変換
 function normalizeInput(str) {
-  return str.replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0)-65248))
-            .replace(/[、，]/g, ',')
-            .replace(/～/g, '~')
-            .trim();
+  return str
+    .replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 65248)) // 全角数字→半角
+    .replace(/[、，]/g, ',')       // 全角カンマ→半角カンマ
+    .replace(/～|ー|-/g, '~')     // 「～」「ー」「-」をすべて「~」に統一
+    .trim();
 }
 
 // 範囲展開
@@ -17,12 +18,17 @@ function expandTerms(terms, maxNum) {
   const nums = new Set();
   terms.forEach(t0 => {
     const t = t0.toUpperCase();
-    if (t === 'ALL') for (let i=1; i<=maxNum; i++) nums.add(i);
-    else if (t.includes('~')) {
-      const [a,b] = t.split('~').map(n=>parseInt(n,10));
-      if (!isNaN(a)&&!isNaN(b)) for (let i=Math.min(a,b); i<=Math.max(a,b); i++) nums.add(i);
+    if (t === 'ALL') {
+      for (let i = 1; i <= maxNum; i++) nums.add(i);
+    } else if (t.includes('~')) {
+      const [a, b] = t.split('~').map(n => parseInt(n, 10));
+      if (!isNaN(a) && !isNaN(b)) {
+        for (let i = Math.min(a, b); i <= Math.max(a, b); i++) {
+          nums.add(i);
+        }
+      }
     } else {
-      const n = parseInt(t,10);
+      const n = parseInt(t, 10);
       if (!isNaN(n)) nums.add(n);
     }
   });
@@ -54,18 +60,21 @@ async function init() {
     const input = normalizeInput(searchBox.value);
     const terms = input ? input.split(',') : [];
     const nums = expandTerms(terms, data.length);
-    let total=0, sum=0;
+    let total = 0, sum = 0;
     data.forEach(item => {
       const row = document.querySelector(`tr[data-num="${item.num}"]`);
-      const visible = nums.size===0 || nums.has(item.num);
+      const visible = nums.size === 0 || nums.has(item.num);
       row.style.display = visible ? '' : 'none';
       if (visible) { total++; sum += item.price; }
     });
     const disc = getDiscount(total);
-    const discSum = Math.round(sum*(1-disc));
+    const discSum = Math.round(sum * (1 - disc));
     const summary = document.getElementById('summary');
-    if (total===0 || nums.size===0) summary.textContent = `選択件数: 全件（${data.length}件） 合計: ---円 (PayPay), ---円 (他)`;
-    else summary.textContent = `選択件数: ${total} 合計: ${discSum}円 (PayPay), ${discSum+600}円 (他)`;
+    if (total === 0 || nums.size === 0) {
+      summary.textContent = `選択件数: 全件（${data.length}件） 合計: ---円 (PayPay), ---円 (他)`;
+    } else {
+      summary.textContent = `選択件数: ${total} 合計: ${discSum}円 (PayPay), ${discSum + 600}円 (他)`;
+    }
   });
 }
 
